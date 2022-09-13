@@ -54,7 +54,7 @@ class Bottleneck(nn.Module):
         if stride != 1 or in_planes != self.expansion*planes:
             self.shortcut = nn.Sequential(
                 P4MConvP4M(in_planes, self.expansion*planes, kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(self.expansion*planes)
+                nn.BatchNorm3d(self.expansion*planes)
             )
 
     def forward(self, x):
@@ -72,7 +72,7 @@ class ResNet(nn.Module):
         self.in_planes = 23
 
         self.conv1 = P4MConvZ2(3, 23, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(23)
+        self.bn1 = nn.BatchNorm3d(23)
         self.layer1 = self._make_layer(block, 23, num_blocks[0], stride=1)
         self.layer2 = self._make_layer(block, 45, num_blocks[1], stride=2)
         self.layer3 = self._make_layer(block, 91, num_blocks[2], stride=2)
